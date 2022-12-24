@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Simple Method Test</title>
+</head>
+
+<script>
+    function getRandomInt(min, max) {
+        return min + Math.floor(Math.random() * (max - min));
+    }
+
+    function startLoading() {
+        var maxTime = 4000;
+        let element = document.getElementById("main_page")
+
+        for (let i = 0; i < 10; i++) {
+            let time = getRandomInt(1000, maxTime)
+            maxTime = time
+
+            let newElement = document.createElement("p")
+            newElement.id = "loading_text_" + i
+            newElement.textContent =
+                "Page is loading! Element wil disappear at " + time + " ms!"
+
+            element.appendChild(newElement)
+
+            setTimeout(removeElement, time, (i === 0), i)
+        }
+
+        console.log("MaxTime is " + maxTime)
+    }
+
+    function removeElement(loaded, id) {
+        let element = document.getElementById("main_page")
+
+        let loadingElement = document.getElementById("loading_text_" + id)
+        element.removeChild(loadingElement)
+
+        if (loaded) {
+            let newElement = document.createElement("p")
+            newElement.id = "loaded_text"
+            newElement.textContent = "Page finally loaded"
+
+            element.appendChild(newElement)
+        }
+    }
+</script>
+
+<body>
+<div name="Main Page" id="main_page">
+    <button type="button" onclick="startLoading()" id="start_button">
+        Click Me
+    </button>
+</div>
+</body>
+</html>
